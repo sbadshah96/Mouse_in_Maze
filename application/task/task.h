@@ -19,15 +19,15 @@ class Mouse{
      Mouse(int xpos = 0, int ypos = 0, char direction = 'n'): // 3-param ctor.
                                                              m_position{std::make_pair(xpos,ypos)},
                                                              m_direction{direction}{
-                std::cerr << "Starting position: (0,0), facing north." << std::endl;
+               //  std::cerr << "Starting position: (0,0), facing north." << std::endl;
         }
      void turn_left();
      void turn_right();
-     void move_foreward();
-     const char& get_direction(){  ///// returns the direction the robot is facing.
+     void move_forward();
+     const char& get_direction(){                     // returns the direction of the robot. 'n', 'e', 's' or 'w'.
         return m_direction;
      }
-     const std::pair<int, int>& get_position(){
+     const std::pair<int, int>& get_position(){       // returns the position of the robot in (x,y).
         return m_position;
      }
 
@@ -49,7 +49,7 @@ class Cell{
                 // std::cout << "Initializing cell walls." << std::endl;
         }
      
-     // initlialize all 4 wall of a cell
+     // initialize all 4 wall of a cell
      void init_cell_walls();
 
      // set one of the walls based on is_wall
@@ -58,10 +58,17 @@ class Cell{
      // return true if wall is closed
      bool is_wall(int wall);
 
+     void get_walls(){
+         for(auto i{0}; i < 4; i++){
+            std::cerr << m_walls.at(i) << " ";
+         }
+         std::cerr << "\n" << std::endl;
+     }
+
     private:
      //!<@brief The walls of the cell.
-     //!< true means the wall is open
-     //!< false means the wall is closed
+     //!< false means the wall is open
+     //!< true means the wall is closed
      //!< 0 = North, 1 = East, 2 = South, 3 = West
      std::array<bool,4> m_walls; 
 
@@ -75,9 +82,19 @@ class Cell{
 class Algorithm{
 
     public:
+     Algorithm(int x_co = 0, int y_co = 15): // 2-param ctor
+                                             m_maze{},
+                                             m_mouse{std::make_unique<Mouse>(nullptr)},
+                                             m_goal{std::make_pair(x_co, y_co)},
+                                             m_maze_height{0},
+                                             m_maze_weight{0}{
+
+   }
+                 
+
     //  Algorithm(std::array<std::array<Cell,16>,16> maze = 0, )
 
-     // initilize outer walls, generate goals, execute search algorith etc
+     // initialize outer walls, generate goals, execute search algorithm etc
      void run();
 
      // color outer walls
@@ -104,11 +121,11 @@ class Algorithm{
 
      private:
      //!<@brief A maze is a 2D array of cells.
-     std::array<std::array<Cell,16>,16> m_maze;
-     std::unique_ptr<Mouse> m_mouse;
-     std::pair<int, int> m_goal;
-     int m_maze_height;
-     int m_maze_weight;
+      std::array<std::array<Cell,16>,16> m_maze;
+      std::unique_ptr<Mouse> m_mouse;
+      std::pair<int, int> m_goal;
+      int m_maze_height;
+      int m_maze_weight;
 
 }; //class Algorithm
 }  // namespace rwa2group15

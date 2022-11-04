@@ -44,14 +44,22 @@ int main(int argc, char *argv[])
     // simulator->moveForward(15);
 
     auto mouse = std::make_unique<rwa2group15::Mouse>();
+    auto cell = std::make_unique<rwa2group15::Cell>();
 
-    mouse->move_foreward();
-    mouse->move_foreward();
+    mouse->move_forward();
+    mouse->move_forward();
+    std::cerr << cell->is_wall(0) << std::endl;
+    // std::cerr << cell->get_walls(0) << std::endl;
     mouse->turn_right();
-    mouse->move_foreward();
+    mouse->move_forward();
     mouse->turn_right();
-    std::cerr << "(" << mouse->get_position().first << ", " << mouse->get_position().second << ")" << std::endl;
-    std::cerr << mouse->get_direction() << std::endl;
+    cell->get_walls();
+    
+    // std::cerr << cell->is_wall(1) << std::endl;
+    std::cerr << "(" << mouse->get_position().first << ", " << mouse->get_position().second << ") " << std::endl;
+    std::cerr << typeid(mouse->get_position().first).name() << std::endl;
+    std::cerr << "facing "<< mouse->get_direction() << std::endl;
+    std::cerr << typeid(mouse->get_direction()).name() << std::endl;
     // std::cerr << "Error" << std::endl;
 
     // setting some walls

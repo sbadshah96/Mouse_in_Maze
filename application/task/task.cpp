@@ -68,8 +68,8 @@ void rwa2group15::Mouse::turn_right(){
     }
 } 
 
-// implementation of move_foreward() method from the class Mouse.
-void rwa2group15::Mouse::move_foreward(){
+// implementation of move_forward() method from the class Mouse.
+void rwa2group15::Mouse::move_forward(){
     if(m_direction == 'n'){
         // m_direction = 'e';
         m_position.second = m_position.second + 1;
@@ -108,29 +108,146 @@ void rwa2group15::Cell::init_cell_walls(){
     m_walls = {0,0,0,0};
 }
 
-// implmentation of is_wall() method from the class Cell
+// implementation of is_wall() method from the class Cell
 bool rwa2group15::Cell::is_wall(int wall){
-    // if(rwa2group15::Mouse::get_direction() == 'n')
-    
-    if(m_walls.at(wall) == 0){
-        return true;
+    auto mouse_cell = std::make_unique<rwa2group15::Mouse>();
+    if(wall == 0){
+        if(mouse_cell->get_direction() == 'n'){
+            if(Simulator::wallFront() == true){
+                // std::cerr << "I was here." << std::endl;
+                return true;
+            }
+        }
+        else if(mouse_cell->get_direction() == 'e'){
+            if(Simulator::wallLeft() == true){
+                return true;
+            }
+        }
+        else if(mouse_cell->get_direction()== 'w'){
+            if(Simulator::wallRight() == true){
+                return true;
+            }
+        }
+        else{
+            std::cerr << "Something is not working in method is_wall() of class Cell for the north wall." << std::endl;
+        }
+    }
+    else if(wall == 1){
+        if(mouse_cell->get_direction() == 'e'){
+            if(Simulator::wallFront() == true){
+                return true;
+            }
+        }
+        else if(mouse_cell->get_direction() == 's'){
+            if(Simulator::wallLeft() == true){
+                return true;
+            }
+        } 
+        else if(mouse_cell->get_direction()== 'n'){
+            if(Simulator::wallRight() == true){
+                return true;
+            }
+        }
+        else{
+            std::cerr << "Something is not working in method is_wall() of class Cell for the east wall." << std::endl;
+        }
     }
 
-    else{
-        return false;
+    else if(wall == 2){
+        if(mouse_cell->get_direction() == 's'){
+            if(Simulator::wallFront() == true){
+                return true;
+            }
+        }
+        else if(mouse_cell->get_direction() == 'w'){
+            if(Simulator::wallLeft() == true){
+                return true;
+            }
+        } 
+        else if(mouse_cell->get_direction()== 'e'){
+            if(Simulator::wallRight() == true){
+                return true;
+            }
+        }
+        else{
+            std::cerr << "Something is not working in method is_wall() of class Cell for the south wall." << std::endl;
+        }
     }
+
+    else if(wall == 3){
+        if(mouse_cell->get_direction() == 'w'){
+            if(Simulator::wallFront() == true){
+                return true;
+            }
+        }
+        else if(mouse_cell->get_direction() == 'n'){
+            if(Simulator::wallLeft() == true){
+                return true;
+            }
+        } 
+        else if(mouse_cell->get_direction()== 's'){
+            if(Simulator::wallRight() == true){
+                return true;
+            }
+        }
+        else{
+            std::cerr << "Something is not working in method is_wall() of class Cell for the west wall." << std::endl;
+        }
+    }
+
+    // else if(mouse->get_direction() == 'e'){
+    //     if(Simulator::wallFront() == false){
+    //         return m_walls.at(1) == false;
+    //     }
+    //     else if(Simulator::wallLeft() == false){
+    //         return m_walls.at(0) == false;
+    //     }
+    //     else if(Simulator::wallRight() == false){
+    //         return m_walls.at(2) == false;
+    //     }
+    //     else{
+    //         std::cerr << "Error in is_wall implementation of class Cell - Mouse facing east.";
+    //     }
+    // }
+
+    // else if(mouse->get_direction() == 's'){
+    //     if(Simulator::wallFront() == false){
+    //         return m_walls.at(2) == false;
+    //     }
+    //     else if(Simulator::wallLeft() == false){
+    //         return m_walls.at(1) == false;
+    //     }
+    //     else if(Simulator::wallRight() == false){
+    //         return m_walls.at(3) == false;
+    //     }
+    //     else{
+    //         std::cerr << "Error in is_wall implementation of class Cell - Mouse facing south.";
+    //     }
+    // }
+    
+    // else if(mouse->get_direction() == 'w'){
+    //     if(Simulator::wallFront() == false){
+    //         return m_walls.at(3) == false;
+    //     }
+    //     else if(Simulator::wallLeft() == false){
+    //         return m_walls.at(2) == false;
+    //     }
+    //     else if(Simulator::wallRight() == false){
+    //         return m_walls.at(0) == false;
+    //     }
+    //     else{
+    //         std::cerr << "Error in is_wall implementation of class Cell - Mouse facing west.";
+    //     }
+    // }
+    return false;
 }
 
 // implementation of set_wall() method from the class Cell
 void rwa2group15::Cell::set_wall(int wall, bool is_wall){
-    if(is_wall == false){
-        m_walls.at(wall) = false;
-    }
-    
+    if(is_wall){
+        m_walls.at(wall) = is_wall;
+    }  
 }
-
-
-
 
 ////////////////          ALGORITHM CLASS           /////////////////
 // implementation of init_out_wall() method from the class Algorithm
@@ -176,26 +293,36 @@ void rwa2group15::Algorithm::init_outer_walls(){
 }
 
 // implementation of generate_goal() method from the class Algorithm.
-void rwa2group15::Algorithm::generate_goal(){
-    
+void rwa2group15::Algorithm::generate_goal(){  
     m_goal.first = rand() % 16;
-
     if(m_goal.first == 0 || m_goal.first == 15){
         m_goal.second = rand() % 16;
     }
-
     else{
         unsigned short k{};
         k = rand() % 2;
         if (k == 0){
             m_goal.second = 0;
         }
-
         else{
             m_goal.second = 1;
         }
     }
-
     Simulator::setColor(m_goal.first, m_goal.second, 'r');
     Simulator::setText(m_goal.first, m_goal.second, "G");
+}
+
+// implementation of set_front_wall() method from the class Algorithm.
+void rwa2group15::Algorithm::set_front_wall(){
+    // auto mouse_algorithm = std::make_unique<rwa2group15::Mouse>();
+    // int x = mouse_algorithm->get_position().first;
+    // int y = mouse_algorithm->get_position().second;
+    // char z = mouse_algorithm->get_direction();
+
+    // auto cell_algorithm = std::make_unique<rwa2group15::Cell>();
+    // bool c = cell_algorithm->is_wall();
+
+
+
+    // if(z == '')
 }
