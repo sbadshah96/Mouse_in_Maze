@@ -16,18 +16,30 @@ namespace rwa2group15{
 class Mouse{
 
     public:
-     Mouse(int xpos = 0, int ypos = 0, char direction = 'n'): // 3-param ctor.
-                                                             m_position{std::make_pair(xpos,ypos)},
+     Mouse(int x_pos = 0, int y_pos = 0, char direction = 'n'): // 3-param ctor.
+                                                             m_position{std::make_pair(x_pos,y_pos)},
                                                              m_direction{direction}{
                //  std::cerr << "Starting position: (0,0), facing north." << std::endl;
         }
+     // turn robot to left side and move
      void turn_left();
+     
+     // turn robot to right side and move
      void turn_right();
+
+     // move robot forward
      void move_forward();
-     const char& get_direction(){                     // returns the direction of the robot. 'n', 'e', 's' or 'w'.
+
+     // turn robot to back side and move
+     void turn_back();
+
+     // return the direction of the robot
+     const char& get_direction(){                     
         return m_direction;
      }
-     const std::pair<int, int>& get_position(){       // returns the position of the robot in (x,y).
+
+     // return the position of the robot
+     const std::pair<int, int>& get_position(){       
         return m_position;
      }
 
@@ -44,9 +56,9 @@ class Mouse{
 class Cell{
     
     public:
-     Cell(std::array<bool,4> walls = {0,0,0,0}): //1-param ctor - all walls are open
-                                                m_walls{walls}{
-                // std::cout << "Initializing cell walls." << std::endl;
+     Cell(): // 1-param ctor
+            m_walls{0,0,0,0}{
+            // std::cout << "Initializing cell walls." << std::endl;
         }
      
      // initialize all 4 wall of a cell
@@ -56,22 +68,21 @@ class Cell{
      void set_wall(int wall, bool is_wall);
      
      // return true if wall is closed
-     bool is_wall(int wall);
+     bool is_wall(int wall, char direction);
 
      void get_walls(){
          for(auto i{0}; i < 4; i++){
             std::cerr << m_walls.at(i) << " ";
          }
          std::cerr << "\n" << std::endl;
-     }
+      }
 
     private:
      //!<@brief The walls of the cell.
      //!< false means the wall is open
      //!< true means the wall is closed
      //!< 0 = North, 1 = East, 2 = South, 3 = West
-     std::array<bool,4> m_walls; 
-
+     std::array<bool,4> m_walls;
 }; // class Cell
 
 
@@ -82,17 +93,15 @@ class Cell{
 class Algorithm{
 
     public:
-     Algorithm(int x_co = 0, int y_co = 15): // 2-param ctor
-                                             m_maze{},
-                                             m_mouse{std::make_unique<Mouse>(nullptr)},
-                                             m_goal{std::make_pair(x_co, y_co)},
-                                             m_maze_height{0},
-                                             m_maze_weight{0}{
-
-   }
-                 
-
-    //  Algorithm(std::array<std::array<Cell,16>,16> maze = 0, )
+     Algorithm(): // 1-param c-tor
+                  m_maze{},
+                  m_goal{14,0},
+                  m_maze_height{0},
+                  m_maze_weight{0}{
+         m_mouse = std::make_unique<Mouse>();
+         // std::cout << "Starting Algorithm Class" << std::endl;
+         // std::cerr << "Starting Algorithm Class" << std::endl;
+      }
 
      // initialize outer walls, generate goals, execute search algorithm etc
      void run();
@@ -118,12 +127,19 @@ class Algorithm{
      // set front wall in m_maze and simulator
      void set_front_wall();
 
+     // set the color of the cell on Mouse's path.
+     void set_cell_color();
+
+     //
+   //   void set_mouse(std::shared_ptr<Mouse> mouse){
+   //       m_mouse = mouse;
+   //   }
 
      private:
      //!<@brief A maze is a 2D array of cells.
       std::array<std::array<Cell,16>,16> m_maze;
-      std::unique_ptr<Mouse> m_mouse;
-      std::pair<int, int> m_goal;
+      std::shared_ptr<Mouse> m_mouse;
+      std::pair<int,int> m_goal;
       int m_maze_height;
       int m_maze_weight;
 
