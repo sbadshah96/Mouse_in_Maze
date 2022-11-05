@@ -256,18 +256,36 @@ void rwa2group15::Algorithm::init_outer_walls(){
 
 // implementation of generate_goal() method from the class Algorithm.
 void rwa2group15::Algorithm::generate_goal(){  
-    m_goal.first = rand() % 16;
-    if(m_goal.first == 0 || m_goal.first == 15){
-        m_goal.second = rand() % 16;
-    }
-    else{
-        unsigned short k{};
-        k = rand() % 2;
-        if (k == 0){
-            m_goal.second = 0;
+    srand(time(0));
+    int begin{rand() % 2};
+    if(begin == 0){
+        m_goal.first = rand() % 15;
+        if(m_goal.first == 0 || m_goal.first == 15){
+            m_goal.second = rand() % 15;
         }
         else{
-            m_goal.second = 1;
+            int temp{rand() % 2};
+            if (temp == 0){
+                m_goal.second = 0;
+            }
+            else{
+                m_goal.second = 15;
+            }
+        }
+    }
+    else{
+        m_goal.second = rand() % 15;
+        if(m_goal.second == 0 || m_goal.second == 15){
+            m_goal.first = rand() % 15;
+        }
+        else{
+            int temp{rand() % 2};
+            if(temp == 0){
+                m_goal.first = 0;
+            }
+            else{
+                m_goal.first = 15;
+            }
         }
     }
     Simulator::setColor(m_goal.first, m_goal.second, 'r');
