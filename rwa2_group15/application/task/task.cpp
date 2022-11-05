@@ -404,6 +404,7 @@ void rwa2group15::Algorithm::set_cell_color(){
     int x_position = m_mouse->get_position().first;
     int y_position = m_mouse->get_position().second;
     Simulator::setColor(x_position, y_position, 'c');
+    Simulator::setText(x_position, y_position, "bc");
 }
 
 void rwa2group15::Algorithm::follow_wall_left(){
@@ -487,6 +488,8 @@ void rwa2group15::Algorithm::follow_wall_right(){
 void rwa2group15::Algorithm::run(){
     init_outer_walls();
     generate_goal();
-    follow_wall_left();
-    // follow_wall_right();
+    std::cerr << "bc: breadcrumbs" << std::endl;
+    // follow_wall_left();
+    follow_wall_right();
+    std::cerr << "HOORAY" << std::endl;
 }
