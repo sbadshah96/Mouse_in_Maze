@@ -10,91 +10,65 @@
 void rwa2group15::Mouse::turn_left(){
     if(m_direction == 'n'){
         m_direction = 'w';
-        // m_position.first = m_position.first - 1;
-        Simulator::turnLeft();
-        // Simulator::moveForward(1);                   
+        Simulator::turnLeft();                  
     }
 
     else if(m_direction == 'w'){
         m_direction = 's';
-        // m_position.second = m_position.second - 1;
         Simulator::turnLeft();
-        // Simulator::moveForward(1);
     } 
 
     else if(m_direction == 's'){
         m_direction = 'e';
-        // m_position.first = m_position.first + 1;
         Simulator::turnLeft();
-        // Simulator::moveForward(1);
     } 
 
     else if(m_direction == 'e'){
         m_direction = 'n';
-        // m_position.second = m_position.second + 1;
         Simulator::turnLeft();
-        // Simulator::moveForward(1);
     }
     move_forward();
-    // std::cerr << m_position.first << " " << m_position.second << std::endl;
 } 
 
 // implementation of turn_right() method from the class Mouse.
 void rwa2group15::Mouse::turn_right(){
     if(m_direction == 'n'){
         m_direction = 'e';
-        // m_position.first = m_position.first + 1;
         Simulator::turnRight();
-        // Simulator::moveForward(1);
     } 
 
     else if(m_direction == 'e'){
         m_direction = 's';
-        // m_position.second = m_position.second - 1;
         Simulator::turnRight();
-        // Simulator::moveForward(1);
     } 
 
     else if(m_direction == 's'){
         m_direction = 'w';
-        // m_position.first = m_position.first - 1;
         Simulator::turnRight();
-        // Simulator::moveForward(1);
     } 
 
     else if(m_direction == 'w'){
         m_direction = 'n';
-        // m_position.second = m_position.second + 1;
         Simulator::turnRight();
-        // Simulator::moveForward(1);
     }
     move_forward();
-    // std::cerr << m_position.first << " " << m_position.second << std::endl;
 } 
 
 // implementation of move_forward() method from the class Mouse.
 void rwa2group15::Mouse::move_forward(){
     if(m_direction == 'n'){
-        // m_direction = 'e';
         m_position.second += 1;
     } 
-
     else if(m_direction == 'e'){
-        // m_direction = 's';
         m_position.first += 1;
     } 
-
     else if(m_direction == 's'){
-        // m_direction = 'w';
         m_position.second -= 1;
     } 
-
     else if(m_direction == 'w'){
-        // m_direction = 'n';
         m_position.first -=  1;
     }
     Simulator::moveForward(1);
-    // std::cerr << m_position.first << " " << m_position.second << std::endl;
 }
 
 void rwa2group15::Mouse::turn_back(){
@@ -102,17 +76,14 @@ void rwa2group15::Mouse::turn_back(){
         m_direction = 's';
         m_position.second -= 1;
     } 
-
     else if(m_direction == 'e'){
         m_direction = 'w';
         m_position.first -= 1;
     } 
-
     else if(m_direction == 's'){
         m_direction = 'n';
         m_position.second += 1;
     } 
-
     else if(m_direction == 'w'){
         m_direction = 'e';
         m_position.first +=  1;
@@ -120,14 +91,12 @@ void rwa2group15::Mouse::turn_back(){
     Simulator::turnLeft();
     Simulator::turnLeft();
     Simulator::moveForward(1);
-    // std::cerr << m_position.first << " " << m_position.second << std::endl;
 }
 
 
 ////////////////           CELL CLASS           /////////////////
 // implementation of is_wall() method from the class Cell
 bool rwa2group15::Cell::is_wall(int wall, char direction){
-    // auto m_mouse = std::make_unique<rwa2group15::Mouse>(0, 0, 'n');
     if(wall == 0){
         if(direction == 'n'){
             if(Simulator::wallFront() == true){
@@ -377,11 +346,8 @@ void rwa2group15::Algorithm::set_right_wall(){
 // implementation of set_front_wall() method from the class Algorithm.
 void rwa2group15::Algorithm::set_front_wall(){
     char direction = m_mouse->get_direction();
-    // std::cerr << direction << " ";
     int x_position = m_mouse->get_position().first;
-    // std::cerr << x_position << " ";
     int y_position = m_mouse->get_position().second;
-    // std::cerr << y_position << std::endl;
     bool wall{};
     if(direction == 'n'){
         if((wall = m_maze.at(x_position).at(y_position).is_wall(0, 'n')))
@@ -424,8 +390,6 @@ void rwa2group15::Algorithm::set_cell_color(){
 
 void rwa2group15::Algorithm::follow_wall_left(){
     std::pair<int,int> position = m_mouse->get_position();
-    // std::cerr << position.first << " " << position.second << std::endl;
-    // std::pair<int,int> TG{14,0};
     while(position != m_goal){
         if(!Simulator::wallLeft()){
             set_cell_color();
@@ -465,7 +429,6 @@ void rwa2group15::Algorithm::follow_wall_left(){
 
 void rwa2group15::Algorithm::follow_wall_right(){
     std::pair<int,int> position = m_mouse->get_position();
-    // std::cerr << position.first << " " << position.second << std::endl;
     while(position != m_goal){
         if(!Simulator::wallRight()){
             set_cell_color();
@@ -506,7 +469,6 @@ void rwa2group15::Algorithm::follow_wall_right(){
 void rwa2group15::Algorithm::run(){
     init_outer_walls();
     generate_goal();
-
     follow_wall_left();
     // follow_wall_right();
 }
