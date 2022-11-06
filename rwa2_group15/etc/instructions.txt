@@ -7,4 +7,5 @@ g++ -std=c++17 -g main.cpp simulator/simulator.cpp task/task.cpp -o main
 ------------------------------------------------------------------------
 To switch between left-hand rule approach and right-hand rule approach
 ------------------------------------------------------------------------
-Explain what to modify in your code to switch between the left-hand rule and the right-hand rule approaches
+To run the left-wall-following algorithm, pass the argument 'left' after './main' with a single space in 'Run Command' tab in simulator.
+To run the right-wall-following algorithm, pass the argument 'right' after './main' with a single space in 'Run Command' tab in simulator.
