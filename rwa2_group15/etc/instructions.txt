@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------
 Build the application
 ------------------------------------------------------------------------
-g++ -std=c++17 -g main.cpp simulator/simulator.cpp <add other files here> -o main
+g++ -std=c++17 -g main.cpp simulator/simulator.cpp task/task.cpp -o main
 
 ------------------------------------------------------------------------
 To switch between left-hand rule approach and right-hand rule approach
