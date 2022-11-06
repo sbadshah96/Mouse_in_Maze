@@ -485,11 +485,20 @@ void rwa2group15::Algorithm::follow_wall_right(){
     set_right_wall();
 }
 
-void rwa2group15::Algorithm::run(){
+void rwa2group15::Algorithm::run_left(){
+    std::cerr << "Following left walls to reach the goal." << std::endl;
     init_outer_walls();
     generate_goal();
     std::cerr << "bc: breadcrumbs" << std::endl;
-    // follow_wall_left();
+    follow_wall_left();
+    std::cerr << "HOORAY" << std::endl;
+}
+
+void rwa2group15::Algorithm::run_right(){
+    std::cerr << "Following right walls to reach the goal." << std::endl;
+    init_outer_walls();
+    generate_goal();
+    std::cerr << "bc: breadcrumbs" << std::endl;
     follow_wall_right();
     std::cerr << "HOORAY" << std::endl;
 }

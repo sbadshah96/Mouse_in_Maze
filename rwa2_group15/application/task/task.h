@@ -157,15 +157,20 @@ class Algorithm{
                   m_maze_weight{0}{
          m_mouse = std::make_unique<Mouse>();
          // std::cout << "Starting Algorithm Class" << std::endl;
-         // std::cerr << "Starting Algorithm Class" << std::endl;
       }
 
      /**
-      * @brief Initialize outer walls, generate goals, and execute search algorithm
+      * @brief Initialize outer walls, generate goals, and execute search algorithm for the follow_wall_left()
       * 
       * 
       */
-     void run();
+     void run_left();
+
+     /**
+      * @brief Initialize outer walls, generate goals, and execute search algorithm for the follow_wall_right()
+      * 
+      */
+     void run_right();
 
      /**
       * @brief Color outer walls
