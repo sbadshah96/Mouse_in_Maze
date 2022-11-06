@@ -14,7 +14,11 @@
 int main(int argc, char* argv[])
 {
     auto algorithm = std::make_unique<rwa2group15::Algorithm>();
-    // algorithm->run_left();
-    algorithm->run_right();
+    if(argv[1] == std::string{"left"}){
+        algorithm->run_left();
+    }
+    else if(argv[1] == std::string{"right"}){
+        algorithm->run_right();
+    }
     return 0;
 }
